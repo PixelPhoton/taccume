@@ -7,7 +7,8 @@ run `sh build.sh`, executable should be in `./build/silly_esolang`
 `silly_esolang <file_to_interpret>`
 
 ## how it works:
-theres an array of 1024 bytes
+theres an array of 1024 bytes,
+and there's the code
 ### two pointers:
 - byte pointer, points to one byte of that array
 - code pointer, points to a character in the code
