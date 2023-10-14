@@ -3,17 +3,20 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#define BYTES_LEN (1024)
+#define TAPE_LEN (2048)
 
-char* codeBuf;      // buffer to store input code
-char bytes[BYTES_LEN];   // byte array
+char* codeBuf;                  // buffer to store input code
+int dataTape[TAPE_LEN];         // tape array
+
+int accumulator = 0;            // accumulator
 
 size_t codeLen;                 // length of code
 size_t codePtr = 0;             // ptr to current char of code
-unsigned short bytePtr = 0;     // ptr to current byte
+unsigned short tapePtr = 0;     // ptr to current tape
+char codePtrDirection = 1;      // negative if going left
 
 void incrCodePtr() {
-    codePtr++;
+    codePtr += codePtrDirection;
     codePtr %= codeLen;
 }
 
@@ -41,59 +44,145 @@ int main(int argc, char** argv) {
 
     fclose(inptFile);   // we done with it
 
-    memset(&bytes, 0, 1024);    // initialise bytes to 0
+    memset(dataTape, 0, sizeof(dataTape));    // initialise tape to 0
     codeLen = trgFStat.st_size - 1;
 
     while(codeBuf[codePtr] != ';') {
         switch(codeBuf[codePtr]) {
         case '>':
-            bytePtr++;
-            bytePtr %= BYTES_LEN;
-            incrCodePtr();
+            tapePtr++;
+            tapePtr %= TAPE_LEN;
             break;
 
         case '<':
-            bytePtr--;
-            bytePtr %= BYTES_LEN;
-            incrCodePtr();
+            tapePtr--;
+            tapePtr %= TAPE_LEN;
             break;
 
         case '+':
-            bytes[bytePtr]++;
-            incrCodePtr();
+            dataTape[tapePtr]++;
             break;
 
         case '-':
-            bytes[bytePtr]--;
-            incrCodePtr();
+            dataTape[tapePtr]--;
             break;
 
-        case ']':
-            codePtr -= bytes[bytePtr];
-            codePtr %= codeLen;
+        case '^':
+            accumulator = dataTape[tapePtr];
+            break;
+
+        case 'v':
+            dataTape[tapePtr] = accumulator;
+            break;
+
+        case '!':
+            accumulator = !accumulator;
+            break;
+
+        case '=':
+            accumulator = (accumulator == dataTape[tapePtr]);
+            break;
+
+        case '#':
+            accumulator = tapePtr;
             break;
 
         case '[':
-            codePtr += bytes[bytePtr];
+            if(accumulator) {
+                codePtr += dataTape[tapePtr];
+                codePtr %= codeLen;
+                continue;
+            }
+            break;
+
+        case ']':
+            if(accumulator) {
+                codePtr -= dataTape[tapePtr];
+                codePtr %= codeLen;
+                continue;
+            }
+            break;
+
+        case 'T':
+            if(accumulator) {
+                codePtr += dataTape[tapePtr];
+            } else {
+                codePtr -= dataTape[tapePtr];
+            }
             codePtr %= codeLen;
+            continue;
+
+        case ')':
+            if(accumulator && codePtrDirection > 0) codePtrDirection *= -1;
+            break;
+
+        case '(':
+            if(accumulator && codePtrDirection < 0) codePtrDirection *= -1;
+            break;
+
+        case '|':
+            if(accumulator) codePtrDirection *= -1;
+            break;
+
+        case '*':
+            printf("%i", dataTape[tapePtr]);
             break;
 
         case '.':
-            putchar(bytes[bytePtr]);
-            incrCodePtr();
+            putchar(dataTape[tapePtr]);
             break;
 
         case ',':
-            bytes[bytePtr] = getchar();
+            dataTape[tapePtr] = getchar();
+            break;
+
+        case '_':
+            codeBuf[codePtr] = (accumulator % 256);
+            break;
+
+        case 's':
+            dataTape[tapePtr] -= accumulator;
+            break;
+
+        case 'a':
+            dataTape[tapePtr] += accumulator;
+            break;
+
+        case 'm':
+            dataTape[tapePtr] *= accumulator;
+            break;
+
+        case 'd':
+            dataTape[tapePtr] /= accumulator;
+            break;
+
+        case ';':
+            goto endOfProgram;
+
+        case ':':
+            if(accumulator) goto endOfProgram;
+
+        case '\'':
             incrCodePtr();
+            dataTape[tapePtr] = codeBuf[codePtr];
+            break;
+
+        case '"':
+            incrCodePtr();
+            while(codeBuf[codePtr] != '"') {
+                putchar(codeBuf[codePtr]);
+                incrCodePtr();
+            }
             break;
 
         default:
-            incrCodePtr();
             break;
         }
+
+        incrCodePtr();
     }
 
+endOfProgram:
     // end of pawgram uwu
     free(codeBuf);
 
