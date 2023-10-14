@@ -84,11 +84,11 @@ int main(int argc, char** argv) {
             break;
 
         case '$':
-            accumulator = codePtr;
+            dataTape[tapePtr] = codePtr;
             break;
 
         case '#':
-            accumulator = tapePtr;
+            dataTape[tapePtr] = tapePtr;
             break;
 
         case '[':
