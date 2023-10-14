@@ -83,8 +83,12 @@ int main(int argc, char** argv) {
             accumulator = (accumulator == dataTape[tapePtr]);
             break;
 
-        case '#':
+        case '$':
             accumulator = codePtr;
+            break;
+
+        case '#':
+            accumulator = tapePtr;
             break;
 
         case '[':

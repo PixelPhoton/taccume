@@ -30,7 +30,8 @@ also, two pointers:
 - `v` puts the value in the accumulator under the tape pointer
 - `!` if the accumulator != 0, sets the accumulator to 0, otherwise, sets the accumulator to 1
 - `=` if the accumulator and the value at the tape pointer are the same, the accumulator is set to 1, otherwise, 0
-- `#` puts the current location of the code pointer into the acuumulator
+- `$` puts the current location of the code pointer into the accumulator
+- `#` puts the current location of the tape pointer into the accumulator
 - `[` if the accumulator != 0, moves the code pointer to the right by the amount under the tape pointer (skipped if thats 0), looping around if it goes out of bounds
 - `]` same as above but to the left
 - `T` similar to above, except it moves to the left if accumulator == 0 and to the right otherwise
