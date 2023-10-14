@@ -28,9 +28,9 @@ also, two pointers:
 - `-` subtracts one from the value at the tape pointer
 - `^` sends the value under the tape pointer to the accumulator
 - `v` puts the value in the accumulator under the tape pointer
-- '!' if the accumulator != 0, sets the accumulator to 0, otherwise, sets the accumulator to 1
-- '=' if the accumulator and the value at the tape pointer are the same, the accumulator is set to 1, otherwise, 0
-- '#' puts the current location under the tape pointer into the acuumulator
+- `!` if the accumulator != 0, sets the accumulator to 0, otherwise, sets the accumulator to 1
+- `=` if the accumulator and the value at the tape pointer are the same, the accumulator is set to 1, otherwise, 0
+- `#` puts the current location under the tape pointer into the acuumulator
 - `[` if the accumulator != 0, moves the code pointer to the right by the amount under the tape pointer (skipped if thats 0), looping around if it goes out of bounds
 - `]` same as above but to the left
 - `T` similar to above, except it moves to the left if accumulator == 0 and to the right otherwise
@@ -42,13 +42,13 @@ also, two pointers:
 - `,` gets a char from stdin and puts it under the tape pointer
 - `_` becomes the value in the accumulator (mod 256) as an ASCII character (which can be executed when the code pointer goes over it again)
 - `s` subtracts the value in the accumulator from the value under the tape pointer
-- 'a' adds the value in the accumulator to the value under the tape pointer
-- 'm' multiplies the value under the tape pointer by the value in the accumulator
-- 'd' divides the value under the tape pointer by the value in the accumulator
--  '  puts the following character under the tape pointer, and skips it
--  "  until reaching another ", doesn't run any commands it encounters, and outputs every character it passes
+- `a` adds the value in the accumulator to the value under the tape pointer
+- `m` multiplies the value under the tape pointer by the value in the accumulator
+- `d` divides the value under the tape pointer by the value in the accumulator
+- `'` puts the following character under the tape pointer, and skips it
+- `"` until reaching another ", doesn't run any commands it encounters, and outputs every character it passes
 - `;` ends the program
-- ':' ends the program only if the accumulator != 0
+- `:` ends the program only if the accumulator != 0
 - any other characters are simply ignored.
 <br>
 you may see examples in the examples folder!<br>
