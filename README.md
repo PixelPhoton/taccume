@@ -5,18 +5,18 @@ pronounciation: up to u :3
 run `sh build.sh`, executable should be in `./build/taccume`
 
 ## design goal:
-as you many know, esolangs aren't designed to be practical, but rather for some other reason.
-this esolang was semi-inspired by brainfuck, and initially, was made to not need to keep track of [] cus i was lazy :3
+as you many know, esolangs aren't designed to be practical, but rather for some other reason.<br>
+this esolang was semi-inspired by brainfuck, and initially, was made to not need to keep track of [] cus i was lazy :3<br>
 but then I decided, I also wanted to make it easier to use and less tedious for certain things (like printing strings or comparing/manipulating values)
 
 ## usage:
 `taccume <file_to_interpret>`
 
 ## how it works:
-there's an array of values, the tape. *(in this implementation, each value is 32-bit signed, and there are 2048 values)*
-there's an accumulator, which can be accessed at any time but only holds one value, *(in this implementation, 32-bit signed)*
-and there's the code, which must be made up of only ASCII characters.
-
+there's an array of values, the tape. *(in this implementation, each value is 32-bit signed, and there are 2048 values)*<br>
+there's an accumulator, which can be accessed at any time but only holds one value, *(in this implementation, 32-bit signed)*<br>
+and there's the code, which must be made up of only ASCII characters.<br>
+<br>
 also, two pointers: 
 - tape pointer, points to a value on the tape
 - code pointer, points to a character in the code
@@ -50,9 +50,9 @@ also, two pointers:
 - `;` ends the program
 - ':' ends the program only if the accumulator != 0
 - any other characters are simply ignored.
-
-you may see examples in the examples folder!
-
-
-
+<br>
+you may see examples in the examples folder!<br>
+<br>
+<br>
+<br>
 ... i made this cus I was bored, I don't even know why i put so many commands in it
