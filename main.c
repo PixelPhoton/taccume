@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
             break;
 
         case '#':
-            accumulator = tapePtr;
+            accumulator = codePtr;
             break;
 
         case '[':
