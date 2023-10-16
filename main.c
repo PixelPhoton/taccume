@@ -28,13 +28,13 @@ int main(int argc, char** argv) {
 
     struct stat trgFStat;   // stat of target file
     if(stat(argv[1], &trgFStat)) {
-        perror("stat: ");
+        perror("stat");
         exit(1);
     }
 
     FILE* inptFile = fopen(argv[1], "r");     // input code file
     if(!inptFile) {
-        perror("fopen: ");
+        perror("fopen");
         exit(1);
     }
 
